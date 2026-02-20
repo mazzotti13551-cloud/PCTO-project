@@ -1,1 +1,135 @@
-hello
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upload File Statico</title>
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #f1f3f4;
+    color: #202124;
+}
+
+header {
+    background: white;
+    padding: 15px 40px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+    font-size: 20px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.main {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.card {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    display: inline-block;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    max-width: 600px;
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+button {
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 24px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #1558b0;
+}
+
+input[type="file"] {
+    margin: 20px 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f1f3f4;
+}
+</style>
+</head>
+<body>
+
+<div class="main">
+    <div class="card">
+        <h1>Carica un File</h1>
+        <input type="file" id="fileInput" multiple>
+        <br>
+        <button onclick="addFiles()">Aggiungi alla tabella</button>
+    </div>
+
+    <div class="card">
+        <h2>File Caricati</h2>
+        <table id="filesTable">
+            <thead>
+                <tr>
+                    <th>Nome File</th>
+                    <th>Dimensione</th>
+                    <th>Anteprima / Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- File caricati qui -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+let filesList = [];
+
+function addFiles() {
+    const input = document.getElementById('fileInput');
+    for (let i = 0; i < input.files.length; i++) {
+        filesList.push(input.files[i]);
+    }
+    renderTable();
+    input.value = '';
+}
+
+function renderTable() {
+    const tbody = document.querySelector('#filesTable tbody');
+    tbody.innerHTML = '';
+    filesList.forEach(file => {
+        const tr = document.createElement('tr');
+        let preview = '';
+        if (file.type.startsWith('image/')) {
+            preview = `<img src="${URL.createObjectURL(file)}" width="50">`;
+        } else {
+            preview = 'File non visualizzabile';
+        }
+        tr.innerHTML = `<td>${file.name}</td>
+                        <td>${(file.size/1024).toFixed(1)} KB</td>
+                        <td>${preview}</td>`;
+        tbody.appendChild(tr);
+    });
+}
+</script>
+
+</body>
+</html>
