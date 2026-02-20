@@ -6,8 +6,8 @@ const axios = require('axios');
 const app = express();
 const upload = multer({ storage: multer.memoryStorage() });
 
-const GITHUB_TOKEN = 'IL_TUO_PERSONAL_ACCESS_TOKEN';
-const REPO = 'tuo-username/tuo-repo';
+const GITHUB_TOKEN = '4289665821';
+const REPO = 'mazzotti/mazzotti-repo';
 const BRANCH = 'main';
 
 app.post('/upload', upload.single('file'), async (req, res) => {
